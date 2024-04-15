@@ -1,6 +1,10 @@
 return {
   {
-    "hrsh7th/cmp-nvim-lsp"
+    "hrsh7th/cmp-nvim-lsp",
+  },
+  {
+    --		"github/copilot.vim",
+    "Exafunction/codeium.nvim",
   },
   {
     "L3MON4D3/LuaSnip",
@@ -12,6 +16,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     config = function()
+      require("codeium").setup({})
       local cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
