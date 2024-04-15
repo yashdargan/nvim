@@ -1,29 +1,31 @@
-local lsp_to_have = { "lua_ls", "clangd","cssls","eslint","html","jsonls","tsserver","pylsp","tailwindcss"}
+local lsp_to_have = { "lua_ls", "clangd", "cssls", "html", "jsonls", "tsserver", "pylsp", "tailwindcss" }
 
 return {
-  {"williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     config = function()
-  require("mason").setup()
-  end
-},
+      require("mason").setup()
+    end,
+  },
   {
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-      ensure_installed = lsp_to_have
+        ensure_installed = lsp_to_have,
       })
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
-      for _,lsp in ipairs(lsp_to_have) do
+      for _, lsp in ipairs(lsp_to_have) do
         lspconfig[lsp].setup({})
       end
-      vim.keymap.set('n','K',vim.lsp.buf.hover,{})
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition,{})
-      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
-    end
-  }
+      vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", { noremap = true, silent = true })
+    end,
+  },
 }
+
